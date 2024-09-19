@@ -1,0 +1,431 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Общий контейнер для карты */
+.map-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Высота на весь экран */
+}
+
+/* Кнопка для фильтров поиска */
+.tag-search-button {
+  position: absolute; /* Абсолютное позиционирование */
+  top: 20px; /* Расположение от верхнего края */
+  left: 20px; /* Расположение от левого края */
+  background-color: #37424a; /* Тёмный фон */
+  color: #c1c1c1; /* Светлый текст */
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 300px; /* Фиксированная ширина */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Легкая тень */
+  z-index: 1000; /* Высокий z-index, чтобы быть выше карты */
+}
+
+/* Иконка плюсика внутри кнопки */
+.plus-icon {
+  font-size: 18px;
+  margin-left: 10px;
+  color: #c1c1c1; /* Цвет иконки */
+}
+
+/* Выпадающее меню для тегов */
+.tag-search-dropdown {
+  position: absolute;
+  top: 65px; /* Должно быть ниже кнопки */
+  left: 20px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  z-index: 1001; /* Чуть выше кнопки */
+  width: 300px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15); /* Легкая тень для выпадающего меню */
+}
+
+/* Стили для заголовка фильтра */
+.tag-search-dropdown label {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* Стили для чекбоксов тегов */
+.tag-search-dropdown input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+/* Стили для каждого тега */
+.tag-search-dropdown div {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Стили для кнопки поиска в выпадающем меню */
+.tag-search-dropdown button {
+  background-color: #37424a;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 14px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Дополнительные стили для карты */
+.yandex-map {
+  width: 100%;
+  height: 100%;
+}
+
+/* Убираем стандартное фокусное выделение для кнопки */
+.tag-search-button:focus {
+  outline: none;
+}
+
+
+
+.add-activity {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 7px 15px;
+  background-color: #37424a;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 10; /* Выше карты */
+}
+
+.add-activity.active {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 7px 15px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 10; /* Выше карты */
+}
+
+.add-activity img {
+  margin-right: 5px;
+}
+
+.add-event-form {
+  position: fixed;
+  top: 30%;
+  left: 20px;
+  width: 270px;
+  background-color: #37424a;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: #fff;
+}
+
+.add-event-form input, .add-event-form select, .add-event-form textarea {
+  width: 70%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 2px;
+  flex-direction: column;
+  display: flex;
+}
+
+.add-event-form button {
+  padding: 6px 10px;
+  background-color: #C0FF9E;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px ;
+}
+
+.close-form {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 12;
+}
+
+.add-event-form label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.add-event-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+
+
+
+
+
+
+/* Стили для контейнера чекбоксов */
+.add-event-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Стили для контейнера каждого тега */
+.add-event-form label div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Разместить текст и чекбокс по краям */
+  direction: rtl; /* Изменение направления для отображения справа налево */
+}
+
+/* Стили для самого чекбокса */
+.add-event-form label input[type="checkbox"] {
+  margin-right: 10px; /* Отступ между чекбоксом и текстом тега */
+  direction: ltr; /* Сбросить направление для чекбокса */
+}
+
+/* Стили для текста тега */
+.add-event-form label div {
+  font-size: 14px;
+  color: #fff;
+}
+
+
+.selected-event-info {
+  position: absolute;
+  bottom: 20px; /* Расположение от нижнего края */
+  left: 20px; /* Расположение от левого края */
+  background-color: #37424a;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2); /* Уменьшить тень */
+  padding: 10px; /* Уменьшить внутренние отступы */
+  border-radius: 6px; /* Уменьшить радиус скругления углов */
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Уменьшить промежутки между элементами */
+  color: #fff;
+  max-width: 220px; /* Уменьшить максимальную ширину */
+  font-size: 12px; /* Уменьшить размер шрифта */
+}
+
+.selected-event-info h2 {
+  text-align: center;
+  margin-bottom: 2px; /* Уменьшить нижний отступ */
+  color: #eee; /* Цвет заголовка */
+}
+
+.selected-event-info p {
+  margin-bottom: 2px; /* Уменьшить нижний отступ */
+  font-size: 11px;
+}
+
+
+@media (max-width: 600px) {
+  .add-event-form {
+    width: 80%; /* Ширина для мобильных устройств */
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0; /* Поднимаем форму наверх */
+    margin-top: 70px; /* Добавляем отступ сверху */
+    font-size: 14px; /* Уменьшенный размер текста для мобильных устройств */
+    gap: 10px; /* Уменьшенный отступ между элементами */
+    padding: 15px; /* Уменьшенный внутренний отступ */
+  }
+  .add-event-form label div {
+    font-size: 13px;
+    color: #fff;
+  }
+  .tag-search-button {
+    max-width: 200px;
+    font-size: 11px;
+  }
+  .selected-event-info {
+    position: absolute;
+    bottom: 100px; /* Расположение от нижнего края */
+    left: 50%; /* Расположение от левого края */
+    transform: translateX(-50%);
+    background-color: #37424a;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2); /* Уменьшить тень */
+    padding: 10px; /* Уменьшить внутренние отступы */
+    border-radius: 6px; /* Уменьшить радиус скругления углов */
+    z-index: 11;
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Уменьшить промежутки между элементами */
+    color: #fff;
+    max-width: 220px; /* Уменьшить максимальную ширину */
+    font-size: 12px; /* Уменьшить размер шрифта */
+  }
+ 
+}
+
+.close-info {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #fff; /* Белый цвет для контраста */
+  cursor: pointer;
+  z-index: 12;
+}
+
+.top-right-icons {
+  position: fixed;
+  top: 20px;
+  right: 10px;
+  display: flex;
+  gap: 10px; /* Отступ между иконками */
+  z-index: 1000; /* Высокий z-index, чтобы иконки были видны поверх всего остального контента */
+}
+
+.icon-link {
+  display: block;
+}
+
+.icon-link img {
+  width: 55px; /* Размер иконки, можно изменить */
+  height: 55px; /* Размер иконки, можно изменить */
+  border: none; /* Убираем обводку */
+  vertical-align: middle; /* Выравнивание иконки по вертикали */
+  cursor: pointer; /* Курсор в виде руки при наведении */
+}
+
+.icon-link:hover img {
+  opacity: 0.8; /* Изменение прозрачности при наведении */
+}
+
+
+
+/* Основной контейнер формы */
+.login-form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #37424a;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  width: 300px; /* Ширина формы */
+  z-index: 1000;
+  max-height: 100%; /* Ограничение высоты */
+  overflow-y: auto; /* Добавляем прокрутку, если контент больше, чем высота формы */
+}
+
+/* Стили для полей ввода */
+.login-form input[type="text"],
+.login-form input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* Кнопки формы */
+.login-form button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Закрывающая кнопка (крестик) */
+.close-form-logout button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: none;
+  border: none;
+  font-size: 16px;  /* Уменьшает размер */
+  cursor: pointer;
+  z-index: 1001;  /* Задаем z-index выше формы */
+  width: 20px;    /* Устанавливаем фиксированную ширину для крестика */
+  height: 20px;   /* Устанавливаем фиксированную высоту */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* Фон, затемняющий экран при открытой форме */
+
+
